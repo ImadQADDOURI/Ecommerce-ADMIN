@@ -1,0 +1,7 @@
+the steps to save your app to a Git repository in a simple way:
+
+git init       
+git add .
+git commit -m "initial commit"
+git remote add origin https://github.com/ImadQADDOURI/Ecommerce-ADMIN.git
+git push origin master   
