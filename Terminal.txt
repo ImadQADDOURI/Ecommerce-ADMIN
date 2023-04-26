@@ -3,5 +3,19 @@ the steps to save your app to a Git repository in a simple way:
 git init       
 git add .
 git commit -m "initial commit"
-git remote add origin https://github.com/ImadQADDOURI/Ecommerce-ADMIN.git
-git push origin master   
+git remote add origin https://github.com/ImadQADDOURI/ecommerce-admin.git
+git push origin main
+
+
+
+
+npx create-next-app@latest .    // . to install in the current directory 
+
+
+
+
+npm install next-auth
+
+
+
+npm install --save firebase
