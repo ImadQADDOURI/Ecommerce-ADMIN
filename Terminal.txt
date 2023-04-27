@@ -1,3 +1,7 @@
+npm install dotenv --save
+
+
+
 the steps to save your app to a Git repository in a simple way:
 
 git init       
@@ -28,4 +32,3 @@ npm install next-auth
 npm install next-auth @next-auth/mongodb-adapter mongodb
 
 
-npm install dotenv --save
