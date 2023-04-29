@@ -38,3 +38,13 @@ npm install axios
 
 
 npm i mongoose
+
+
+
+npm install multiparty
+
+
+
+
+
+npm install firebase
