@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { storage } from './../lib/firebase';
+
 
 export default function ProductForm({
     _id,
@@ -44,22 +44,10 @@ export default function ProductForm({
     }
 
 
-    const upload = async (file) => {
-        const storageRef = storage.ref();
-        const fileRef = storageRef.child(file.name);
-        const snapshot = await fileRef.put(file);
-        const downloadURL = await snapshot.ref.getDownloadURL();
-        return downloadURL;
-    }
+  
 
-    const uploadImages = async (e) => {
-        const file = e.target.files[0];
-        const downloadURL = await upload(file);
-        console.log(downloadURL);
-      
-      
+    async function uploadImages(e) {
         
-        /*
 
         const files = e.target?.files;
         if(files?.length > 0){
@@ -71,7 +59,7 @@ export default function ProductForm({
               // console.log(res.data);
            
         }
-        */
+        
     };
     
 

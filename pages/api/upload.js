@@ -1,5 +1,8 @@
-/*import multiparty from 'multiparty';
+import multiparty from 'multiparty';
 import { resolve } from 'styled-jsx/css';
+
+
+import { uploadFile } from "../../lib/upload";
 
 
 export default async function handle(req,res){
@@ -16,26 +19,34 @@ export default async function handle(req,res){
 
     console.log(files);
 
+/*
+
+    const handleFileUpload = async (files) => {
+
+        if (!files) {
+            console.error('File object is undefined or null');
+            return;
+          }
+          
+        const file = files[0]; // Assumes only one file is uploaded
+        console.log('File object:', file);
+        
+        try {
+          const url = await uploadFile(file);
+          console.log("File uploaded successfully. Download URL:", url);
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      };
+
+
+
+// Call the handleFileUpload function with the files data
+handleFileUpload(files.file);
+*/
 
     res.json(':) uploaded');
-}  
+};  
 
 export const config = { api : {bodyParser:false},};
 
-*/
-
-import { storage } from '../path/to/firebase.js';
-
-export default async function handle(req,res){
-
-const uploadImage = async (file) => {
-  const storageRef = storage.ref();
-  const fileRef = storageRef.child(file.name);
-  const snapshot = await fileRef.put(file);
-  const downloadURL = await snapshot.ref.getDownloadURL();
-  return downloadURL;
-};
-
-
-res.json(':) uploaded');
-}

@@ -47,4 +47,9 @@ npm install multiparty
 
 
 
-npm install firebase
+npm install firebase @firebase/storage
+npm install firebase-admin
+
+
+
+yarn add react-sweetalert2
