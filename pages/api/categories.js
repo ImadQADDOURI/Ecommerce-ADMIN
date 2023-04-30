@@ -14,10 +14,10 @@ export default async function handle(req,res){
     } 
 
     if(method === 'POST'){
-        const {name,parentCategory} = req.body;
+        const {name,parentCategory,properties} = req.body;
 
         if(parentCategory){// if parent category is selected
-            const categoryDoc = await Category.create({name,parent:parentCategory});
+            const categoryDoc = await Category.create({name,parent:parentCategory || undefined,properties});
             res.json(categoryDoc);
 
         }else{// if no parent category is selected
@@ -29,9 +29,9 @@ export default async function handle(req,res){
     };
 
     if(method === 'PUT'){
-        const {name,parentCategory,_id} = req.body;
+        const {name,parentCategory,properties,_id} = req.body;
         console.log("**************parentCategory "+parentCategory);
-        const categoryDoc = await Category.updateOne({_id},{name,parent:parentCategory});
+        const categoryDoc = await Category.updateOne({_id},{name,parent:parentCategory || undefined,properties});
         res.json(categoryDoc);
     };
 
