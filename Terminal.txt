@@ -52,4 +52,5 @@ npm install firebase-admin
 
 
 
+npm install --global yarn
 yarn add react-sweetalert2
