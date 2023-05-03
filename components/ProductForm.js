@@ -105,13 +105,13 @@ return(
         <input type="text" placeholder="product name" value={title}
          onChange={e => { setTitle(e.target.value);}}/>
 
-        <label >Category</label>
-        <select name="" id="" value={category} onChange={e => setCategory(e.target.value)}>
-            <option value="">Uncategorized</option>
-
-            { categories.length > 0 &&
-                categories.map(category => ( <option value={category._id}>{category.name}</option>     ))
-            }
+<label>Category</label>
+        <select value={category}
+                onChange={ev => setCategory(ev.target.value)}>
+          <option value="">Uncategorized</option>
+          {categories.length > 0 && categories.map(c => (
+            <option key={c._id} value={c._id}>{c.name}</option>
+          ))}
         </select>
 
         {propertiesToFill.length > 0 && propertiesToFill.map(p => (
