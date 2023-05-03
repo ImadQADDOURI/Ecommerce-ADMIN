@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
-import Logo from './logo';
+import Logo from './Logo';
 
 function Nav({show}) {
 const inactiveLink = 'flex gap-2 p-1';

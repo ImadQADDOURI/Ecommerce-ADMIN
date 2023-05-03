@@ -28,16 +28,16 @@ if(method === 'GET'){
 
 if(method === 'POST'){
 
-    const {title,description,price,category,properties} = req.body;
-    const productDoc = await Product.create({title,description,price,category,properties})
+    const {title,description,price,images,category,properties} = req.body;
+    const productDoc = await Product.create({title,description,price,images,category,properties})
     res.json(productDoc);
 }
 
 
 if(method === 'PUT'){
  
-    const {title,description,price,category,properties,_id} = req.body;
-    await Product.updateOne({_id:_id}, {title:title,description:description,price:price,category:category,properties});
+    const {title,description,price,images,category,properties,_id} = req.body;
+    await Product.updateOne({_id:_id}, {title:title,description:description,price:price,images,category:category,properties});
     res.json(true);
 }
 

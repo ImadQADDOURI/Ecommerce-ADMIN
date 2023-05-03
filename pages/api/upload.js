@@ -1,57 +1,48 @@
 import multiparty from 'multiparty';
-import { resolve } from 'styled-jsx/css';
+import {PutObjectCommand, S3Client} from '@aws-sdk/client-s3';
+import fs from 'fs';
+import mime from 'mime-types';
+import {mongooseConnect} from "@/lib/mongoose";
+import {isAdminRequest} from "@/pages/api/auth/[...nextauth]";
 
+const bucketName = 'imad-ecommerce-app';
 
-import { uploadFile } from "../../lib/upload";
-import { mongooseConnect } from '@/lib/mongoose';
-
-
-export default async function handle(req,res){
-
+export default async function handle(req,res) {
   await mongooseConnect();
   await isAdminRequest(req,res);
 
-
-    const form = new multiparty.Form();
-    const {fields,files} = await new Promise( (resolve, reject) => {
-
-        form.parse(req , (err,fields,files) => {
-            if(err) reject(err);
-            resolve({fields,files});
-        });
-
+  const form = new multiparty.Form();
+  const {fields,files} = await new Promise((resolve,reject) => {
+    form.parse(req, (err, fields, files) => {
+      if (err) reject(err);
+      resolve({fields,files});
     });
+  });
+  console.log('length:', files.file.length);
+  const client = new S3Client({
+    region: 'us-east-1',
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY,
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    },
+  });
+  const links = [];
+  for (const file of files.file) {
+    const ext = file.originalFilename.split('.').pop();
+    const newFilename = Date.now() + '.' + ext;
+    await client.send(new PutObjectCommand({
+      Bucket: bucketName,
+      Key: newFilename,
+      Body: fs.readFileSync(file.path),
+      ACL: 'public-read',
+      ContentType: mime.lookup(file.path),
+    }));
+    const link = `https://${bucketName}.s3.amazonaws.com/${newFilename}`;
+    links.push(link);
+  }
+  return res.json({links});
+}
 
-    console.log(files);
-
-/*
-
-    const handleFileUpload = async (files) => {
-
-        if (!files) {
-            console.error('File object is undefined or null');
-            return;
-          }
-          
-        const file = files[0]; // Assumes only one file is uploaded
-        console.log('File object:', file);
-        
-        try {
-          const url = await uploadFile(file);
-          console.log("File uploaded successfully. Download URL:", url);
-        } catch (error) {
-          console.error("Error uploading file:", error);
-        }
-      };
-
-
-
-// Call the handleFileUpload function with the files data
-handleFileUpload(files.file);
-*/
-
-    res.json(':) uploaded');
-};  
-
-export const config = { api : {bodyParser:false},};
-
+export const config = {
+  api: {bodyParser: false},
+};

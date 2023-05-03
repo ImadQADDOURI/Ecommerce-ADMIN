@@ -1,7 +1,7 @@
 import Nav from "@/components/Nav";
 import {useState} from "react";
 import { useSession, signIn, signOut } from "next-auth/react"
-import Logo from './logo';
+import Logo from "@/components/Logo";
 
 
 export default function Layout({children}) {

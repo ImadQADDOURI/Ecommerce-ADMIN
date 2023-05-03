@@ -54,3 +54,17 @@ npm install firebase-admin
 
 npm install --global yarn
 yarn add react-sweetalert2
+
+
+
+yarn add multiparty
+
+
+yarn add @aws-sdk/client-s3
+
+
+yarn add mime-types
+
+yarn add react-spinners
+
+yarn add sortablejs
