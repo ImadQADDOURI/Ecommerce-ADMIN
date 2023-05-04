@@ -13,7 +13,7 @@ export default function Layout({children}) {
       <div className="bg-bgGray w-screen h-screen flex items-center">
       <div className="text-center w-full">
 
-      <button onClick={() => signIn('google')} className="bg-white rounded-lg text-blue-900  p-2 px-10"><b>Log in with Google</b></button>
+      <button onClick={(e) =>{e.preventDefault();signIn('google'); }  } className="bg-white rounded-lg text-blue-900  p-2 px-10"><b>Log in with Google</b></button>
       </div> 
     </div> 
     )
