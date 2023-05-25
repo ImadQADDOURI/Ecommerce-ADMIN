@@ -34,11 +34,11 @@ const data = {
 
 
 
-export default function LineChart() {
+export default function Linechart() {
   
   return (
 
-    <div className='w-full md:col-span-2 relative lg:h-[70vh] h-[50vh]  p-4 border rounded-lg bg-white mt-2 '>
+    <div className='w-auto md:col-span-2 relative lg:h-[70vh] h-[50vh]  p-4 border rounded-lg bg-white ml-2 mt-4 mr-2 '>
    
         <Line
           data={data}

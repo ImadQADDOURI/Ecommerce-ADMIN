@@ -1,5 +1,7 @@
+import Barchart from "@/components/Barchart";
 import Layout from "@/components/Layout"
 import Linechart from "@/components/Linechart";
+import Piechart from "@/components/Piechart";
 import { useSession } from 'next-auth/react';
 
 
@@ -24,9 +26,19 @@ export default function Home() {
          </span>
          
          </div>   
+
+
+         
       </div>
 
+
       <Linechart/>
+
+      <div className="flex justify-between">
+        <Piechart/>
+      <Barchart/>
+      </div>
+      
       
     </Layout>
   )
