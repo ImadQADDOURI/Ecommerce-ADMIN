@@ -37,13 +37,16 @@ const data = {
 export default function LineChart() {
   
   return (
-  <div>
-    <h2>OverView</h2>
-    <Line
-      data={data}
-  
-    />
+
+    <div className='w-full md:col-span-2 relative lg:h-[70vh] h-[50vh]  p-4 border rounded-lg bg-white mt-2 '>
+   
+        <Line
+          data={data}
+      
+        />
+
   </div>
+  
   );
   
   }
