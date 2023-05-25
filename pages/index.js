@@ -1,5 +1,7 @@
 import Layout from "@/components/Layout"
+import Linechart from "@/components/Linechart";
 import { useSession } from 'next-auth/react';
+
 
 
 export default function Home() {
@@ -21,9 +23,11 @@ export default function Home() {
          {session?.user?.email}
          </span>
          
-         </div>
+         </div>   
       </div>
 
+      <Linechart/>
+      
     </Layout>
   )
 }
