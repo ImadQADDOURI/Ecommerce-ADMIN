@@ -34,20 +34,18 @@ const data = {
 
 
 
-export default () => {
+export default function LineChart() {
   
   return (
   <div>
     <h2>OverView</h2>
     <Line
       data={data}
-      
+  
     />
   </div>
   );
   
-  
-   
   }
 
  
