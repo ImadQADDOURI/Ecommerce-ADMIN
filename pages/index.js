@@ -31,14 +31,15 @@ export default function Home() {
          
       </div>
 
-
+<div className="hidden md:block">
       <Linechart/>
 
       <div className="flex justify-between">
         <Piechart/>
       <Barchart/>
       </div>
-      
+
+    </div>  
       
     </Layout>
   )

@@ -13,8 +13,8 @@ export default function OrdersPage() {
   }, []);
   return (
     <Layout>
-      <div className='w-full md:col-span-2 relative h-full  border rounded-lg bg-white ml-2 mt-2 '>
-      <ComposableMap className='m-4 p-2 h-fit'>
+      <div className='hidden md:block w-full md:col-span-2 relative h-full  border rounded-lg bg-white ml-2 mt-2 '>
+      <ComposableMap className=' m-4 p-2 h-fit'>
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => (
