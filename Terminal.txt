@@ -73,4 +73,20 @@ yarn add sortablejs
 
 ///*npm i country-iso-2-to-3 react-redux react-datepicker@4.8.0 @mui/material @emotion/react @emotion/styled @mui/icons-material @mui/x-data-grid @nivo/core @nivo/bar @nivo/geo @nivo/pie
 
+
+
 yarn add react-chartjs-2 chart.js
+
+npm install --save react-simple-maps
+
+
+
+
+npm uninstall react-sweetalert2   
+ yarn add sweetalert            
+
+
+
+
+yarn add country-iso-2-to-3 react-redux react-datepicker@4.8.0 @mui/material @emotion/react @emotion/styled @mui/icons-material @mui/x-data-grid @nivo/core @nivo/bar @nivo/geo @nivo/pie
+yarn add react-simple-maps
