@@ -9,7 +9,7 @@ const geoUrl ="https://raw.githubusercontent.com/deldersveld/topojson/master/wor
 import { ZoomableGroup } from "react-simple-maps"
 
 
-export default function geo() {
+export default function Geo() {
 
   useEffect(() => {
   }, []);
