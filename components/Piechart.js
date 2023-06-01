@@ -1,43 +1,72 @@
-import React from 'react';
+import React,{ useState, useEffect }  from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const data = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+
+export default function Piechart() {
+
+const [data, setData] = useState( {
+  labels: ['Paid orders', 'Unpaid orders'],
   datasets: [
     {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
+      label: 'Paid & Unpaid orders',
+      data: [12, 18],
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
+       
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(255, 99, 132, 0.2)'
       ],
       borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
         'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
+        'rgba(255, 99, 132, 1)',
+
       ],
       borderWidth: 1,
     },
   ],
-};
+});
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Fetch the paid and unpaid orders data from your API
+      const response = await fetch('/api/chartData?chartType=PaidUnpaidOrders');
+      const ordersData = await response.json();
+      console.log('ordersData');
+      console.log(ordersData);
 
-export default function Piechart() {
+      // Update the data object with the count of paid and unpaid orders
+      const updatedData = [
+        ordersData[0].paidOrders.count || 0,
+        ordersData[0].unpaidOrders.count || 0,
+      ];
+
+      // Update the data state
+      setData(prevData => ({
+        ...prevData,
+        datasets: [
+          {
+            ...prevData.datasets[0],
+            data: updatedData,
+          },
+        ],
+      }));
+    } catch (error) {
+      console.log('Error fetching orders data:', error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
   return(
   
   <>
- <div className='w-full md:col-span-2 relative lg:h-[50vh] h-[50vh]  p-4 border rounded-lg bg-white ml-2 mt-2 '>
+ <div className='w-auto md:col-span-2 relative lg:h-[70vh] h-[50vh]  p-4 border rounded-lg bg-white ml-2 mt-2 mr-2   flex   justify-center  '>
    
-   <Pie data={data} />
+   <Pie  data={data} />
  </div>
   </>
   )

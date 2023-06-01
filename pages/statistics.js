@@ -1,6 +1,9 @@
 import Layout from "@/components/Layout";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Linechart from "@/components/Linechart";
+import Barchart from "@/components/Barchart";
+import Piechart from "@/components/Piechart";
 
 function ChartComponent() {
 
@@ -24,6 +27,8 @@ function ChartComponent() {
 console.log('-->data :'+chartData);
 
 
+
+
   const [chartData2, setChartData2] = useState([]);
   useEffect(() => {
     async function fetchData() {
@@ -39,7 +44,11 @@ console.log('-->data :'+chartData);
 
     fetchData();
   }, []);
-  console.log('-->data2 :'+chartData2);
+  console.log('----------------------datat2');
+  console.log(chartData2);
+
+
+
 
 
 
@@ -81,47 +90,124 @@ console.log('-->data :'+chartData);
   
 
   return (
-    <Layout>
+    <Layout >
+      <div className="justify-between">
 
-        <div>
-      <h1>countryCount</h1>
-      {chartData.map((item) => (
-        <div key={item._id}>
-          <p>Country: {item._id}  Count: {item.count}</p>
-          <p></p>
-        </div>
-      ))}
-    </div>
 
-    <div>
-      <h1>totalSalesLastWeek</h1>
-      {chartData2.map((item) => (
-        <div key={item._id}>
-          <p>day: {item.dayName.name} day: {item.dayName.num}  total: {item.totalAmount}$</p>
-          <p></p>
-        </div>
-      ))}
-    </div>
+ <h1>Total Sales Last Week</h1>
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-2">
+ 
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-600">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-500">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                day
+                </th>
+                <th scope="col" class="px-6 py-3">
+                total
+                </th>
+              
+                </tr>
+                </thead>
+                <tbody>
+                  {chartData2.map((item) => (
+                          <tr key={item._id}  class="bg-white border-b  ">
+                            <td class="px-6 py-4"> {item.dayName.name} </td>
+                            <td class="px-6 py-4">   {item.totalAmount}$</td>
+                            
+                          </tr>
+                        ))}
+                      
+                </tbody>
+                </table>
+</div>
+    
+      
 
-    <div>
-      <h1>totalSalesLastYear</h1>
+    <Linechart/>
+    <br></br>
+    <h1>Total Sales this Year</h1>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-2">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-600">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-500">
+          <tr >
+            <th scope="col" class="px-6 py-3">Month</th>
+            <th scope="col" class="px-6 py-3">Total Sales</th>
+            
+          </tr>
+          </thead>
+
+          <tbody>
       {chartData3.map((item) => (
-        <div key={item._id}>
-          <p>monthName: {item.monthName}    munth: {item._id.month}    total: {item.totalAmount}$</p>
-          <p></p>
-        </div>
+        <tr key={item._id} class="bg-white border-b ">
+          <td class="px-6 py-4">{item.monthName}   </td>
+          <td class="px-6 py-4">{item.totalAmount}$</td>
+          
+        </tr>
       ))}
+       </tbody>
+      </table>
     </div>
 
-    <div>
-      <h1>totalSalesLastYear</h1>
+    <Barchart />
+    <br></br>
+    <h1>Paid & Unpaid Orders</h1>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-2">
+      
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-600">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-500">
+          <tr >
+            <th scope="col" class="px-6 py-3">Paid Orders</th>
+            <th scope="col" class="px-6 py-3">Unpaid Orders</th>
+            
+          </tr>
+          </thead>
+
+          <tbody>
+
+          
       {chartData4.map((item) => (
-        <div key={item._id}>
-          <p>paidOrders: {item.paidOrders.count}    unpaidOrders: {item.unpaidOrders.count} </p>
-          <p></p>
-        </div>
+        <tr key={item._id} class="bg-white border-b ">
+          <td class="px-6 py-4">{item.paidOrders.count} </td>
+          <td class="px-6 py-4">{item.unpaidOrders.count} </td>
+        </tr>
       ))}
+      
+      </tbody>
+      </table>
     </div>
+
+    <Piechart/>
+    <br></br>
+
+    <h1>Country Count</h1>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-2">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-600">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-500">
+          <tr >
+            <th scope="col" class="px-6 py-3">Country</th>
+            <th scope="col" class="px-6 py-3">Count</th>
+            
+          </tr>
+          </thead>
+
+          <tbody>
+      {chartData.map((item) => (
+        
+          <tr key={item._id} class="bg-white border-b ">
+          <td  class="px-6 py-4">{item._id} </td>
+          <td  class="px-6 py-4"> {item.count}</td>
+          </tr>
+          
+          
+        
+      ))}
+       </tbody>
+      </table>
+    </div>
+    </div>
+
+
 
     </Layout>
     

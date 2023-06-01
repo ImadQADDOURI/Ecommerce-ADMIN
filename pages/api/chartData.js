@@ -173,11 +173,11 @@ export default async function handler(req,res) {
           $facet: {
             paidOrders: [
               { $match: { paid: true } },
-              { $group: { _id: null, count: { $sum: 1 } } }
+              { $group: { _id: 'paidOrders', count: { $sum: 1 } } }
             ],
             unpaidOrders: [
               { $match: { paid: false } },
-              { $group: { _id: null, count: { $sum: 1 } } }
+              { $group: { _id: 'unpaidOrders', count: { $sum: 1 } } }
             ]
           }
         },

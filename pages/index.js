@@ -32,7 +32,7 @@ export default function Home() {
       </div>
 
 <div className="hidden md:block">
-      <Linechart/>
+      <Linechart />
 
       <div className="flex justify-between">
         <Piechart/>
