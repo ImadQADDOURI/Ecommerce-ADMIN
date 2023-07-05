@@ -9,7 +9,29 @@ export default function Layout({children}) {
 
   const { data: session } = useSession()
   if (!session) { 
-    return (
+    return(
+      <div className="flex h-full items-center py-16">
+        <div className="w-full max-w-md mx-auto p-6">
+          <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-4 sm:p-7">
+              <div className="text-center">
+                <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">Sign in</h1>
+              </div>
+              <div className="mt-6">
+                <p className="text-center text-gray-500 mb-4">Only admins can access this page.</p>
+                <button
+                  className="w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-500"
+                  onClick={signIn}
+                >
+                  Sign in with OAuth
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+    /**(
 
   <div class="  flex h-full items-center py-16">
     <div class="w-full max-w-md mx-auto p-6">
@@ -53,7 +75,7 @@ export default function Layout({children}) {
 
 
 
-    )
+    )*/
 
   }
 

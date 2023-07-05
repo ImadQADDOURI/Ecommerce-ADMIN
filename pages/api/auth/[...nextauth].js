@@ -1,5 +1,8 @@
 import NextAuth, {getServerSession} from 'next-auth'
+import EmailProvider from "next-auth/providers/email"
 import GoogleProvider from 'next-auth/providers/google'
+import FacebookProvider from "next-auth/providers/facebook";
+import TwitterProvider from "next-auth/providers/twitter"
 import GitHubProvider from "next-auth/providers/github";
 import {MongoDBAdapter} from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
@@ -9,10 +12,13 @@ const adminEmails = ['imad999qaddouri@gmail.com'];
 export const authOptions = {
   secret: process.env.SECRET,
   providers: [
+    EmailProvider({}),
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET
     }),
+    FacebookProvider({}),
+    TwitterProvider({}),
     GitHubProvider({})
     
   ],
