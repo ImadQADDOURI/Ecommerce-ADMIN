@@ -92,3 +92,10 @@ yarn add country-iso-2-to-3 react-redux react-datepicker@4.8.0 @mui/material @em
 yarn add react-simple-maps
 
 yarn add nodemailer
+
+
+yarn add iso-3166-1-alpha-2
+
+
+yarn add @nivo/geo @nivo/colors
+yarn add @nivo/core @nivo/geo
