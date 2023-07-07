@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+/*import Layout from "@/components/Layout";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -19,11 +19,11 @@ export default function Geo() {
           const response = await axios.get('/api/chartData?chartType=countryCount');
           const data = response.data;
   
-/*
-          const formattedData = Object.entries(data).map(([_id,count]) => {
-            return { id:_id,value: count}
-          });
-*/
+
+        // const formattedData = Object.entries(data).map(([_id,count]) => {
+        // return { id:_id,value: count}
+        // });
+
 
             const formattedData = data.map((item, index) => ({
                 id: item._id,
@@ -48,7 +48,7 @@ export default function Geo() {
   const testData = jsonData ;
 
 
-  const MyResponsiveChoropleth = ({ data /* see data tab */ }) => (
+  const MyResponsiveChoropleth = ({ data  }) => (
     <ResponsiveChoropleth
         data={testData}
         features={geoData.features}
@@ -132,3 +132,4 @@ export default function Geo() {
     </Layout>
   );
 }
+*/

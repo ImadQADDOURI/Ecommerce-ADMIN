@@ -3,6 +3,34 @@
 @tailwind utilities;
 
 
+
+.controls {
+  display: flex;
+  position: absolute;
+  top: 1%;
+  left: 50%;
+  margin: 1% 0;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.controls > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  height: 3rem;
+  width: 3rem;
+  background: #ff5533;
+  color: #fff;
+  border-radius: 100%;
+  border: 0;
+}
+.controls > button:first-child {
+  margin-right: 0.25rem;
+}
+
+
 img{
   max-height: 100%;
 }
