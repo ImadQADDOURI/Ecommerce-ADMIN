@@ -1,16 +1,16 @@
-/*import Layout from "@/components/Layout";
+import Layout from "@/components/Layout";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-
+/*
 import { ResponsiveChoropleth,ResponsiveChoroplethCanvas } from "@nivo/geo";
 import { geoData } from "@/public/geoData";
  import { jsonData } from "@/public/jsonData"; 
 import { Box, useTheme } from "@mui/material";
 
+*/
 
-
-export default function Geo() {
+export default function Geo() {/*
 
     const [Data, setChartData] = useState([]);
     useEffect(() => {
@@ -131,5 +131,4 @@ export default function Geo() {
       
     </Layout>
   );
-}
-*/
+*/}

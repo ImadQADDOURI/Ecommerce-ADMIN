@@ -106,3 +106,5 @@ yarn add next-transpile-modules
 
 
 yarn add d3-scale d3-scale-chromatic
+
+>>yarn add --dev @types/sortablejs@1
