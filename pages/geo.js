@@ -1,73 +1,47 @@
 import Layout from "@/components/Layout";
 import {useEffect, useState} from "react";
 import axios from "axios";
-
 import { ComposableMap, Geographies, Geography, Graticule, Sphere, ZoomableGroup } from "react-simple-maps";
-
 import { scaleLinear } from 'd3-scale';
+import { jsonData } from "@/public/jsonData";
+
+
+import { countryToAlpha2, countryToAlpha3 } from "country-to-iso";
+
 
 const geoUrl ="https://raw.githubusercontent.com/lotusms/world-map-data/main/world.json"
 
-const data = [
-    {
-      "id": "AFG",
-      "value": 100
-    },
-    {
-      "id": "AGO",
-      "value": 2000
-    },
-    {
-      "id": "ALB",
-      "value": 333
-    },{
-        "id": "USA",
-        "value": 444
-      },{
-        "id": "DZA",
-        "value": 555
-      },{
-        "id": "AND",
-        "value": 666
-      },{
-        "id": "AUT",
-        "value": 777
-      },{
-        "id": "BHR",
-        "value": 888
-      },
-  ];
+
   
   
-  let transformedData = data
 
-  // Find the minimum and maximum values in the dataset
-const min = Math.min(...transformedData.map((d) => d.value));
-const max = Math.max(...transformedData.map((d) => d.value));
-
-// Define the color scale based on the minimum and maximum values
-const colorScale = scaleLinear()
-  .domain([min, max])
-  .range(['#0000FF', '#FF0000']);
 
 
 
 
 export default function Geo() {
 
-    const [Data, setChartData] = useState([]);
+
+    let [Data, setChartData] = useState([]);
     useEffect(() => {
       async function fetchData() {
         try {
           const response = await axios.get('/api/chartData?chartType=countryCount');
-          const data = response.data;
+          let data = response.data;
+          console.log(data);
+        /*  data =[
+            {_id: 'Algeria', count: 4},
+            {_id: 'United States of America', count: 12},
+            {_id: 'Austria', count: 1},
+            {_id: 'Botswana', count: 2},
+            ];*/
 
-            const formattedData = data.map((item, index) => ({
-                id: item._id,
+            const formattedData = data.map((item) => ({
+                id: countryToAlpha3(item._id) ,
                 value: item.count,
             }));
 
-          setChartData(formattedData);
+           setChartData(formattedData);
         
         } catch (error) {
           console.error(error);
@@ -78,17 +52,26 @@ export default function Geo() {
     }, []);
   console.log(Data);
 
-  const [position,setposition]=useState({coordinates:[0,0], zoom : 1});
+  let min,max,colorScale;
+ if(Data.length > 0 ){
+  // Find the minimum and maximum values in the dataset
+   min = Math.min(...Data.map((d) => d.value));
+   max = Math.max(...Data.map((d) => d.value));
+  
+  // Define the color scale based on the minimum and maximum values
+   colorScale = scaleLinear().domain([min, max]).range(["#ffedea", "#ff5233"]);
+    }
+  
 
+
+  const [position,setposition]=useState({coordinates:[0,0], zoom : 1});
   const hundelMoveEnd = (position) => {
     setposition(position);
   }
-
   function handleZoomIn() {
     if (position.zoom >= 4) return;
     setposition((pos) => ({ ...pos, zoom: pos.zoom * 2 }));
   }
-
   function handleZoomOut() {
     if (position.zoom <= 1) return;
     setposition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
@@ -143,15 +126,15 @@ export default function Geo() {
         >
         <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
         <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-            {data.length > 0 && (
+            {Data.length > 0 && (
         
                 <Geographies geography={geoUrl}>
                     {({ geographies }) =>
                         geographies.map((geo, index) => {
                         const { id } = geo;
-                        const datum = transformedData.find((d) => d.id === id);
+                        const datum = Data.find((d) => d.id === id);
 
-                        const fill = datum ? (colorScale(datum.value)) : '#eee';
+                        const fill = datum ? (colorScale(datum.value)) :  "#F5F4F6" /*'#eee'*/;
                         
                         return (
                             <Geography
@@ -162,7 +145,7 @@ export default function Geo() {
                             style={{
                 
                                 hover: {
-                                  fill: "#909090",
+                                  fill: "#ff0000",
                                 },
                                 pressed: {
                                   fill: "#000",
