@@ -6,7 +6,7 @@ import Chart from 'chart.js/auto';
 
 export default function Barchart() {
   const [data, setData] = useState({
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    labels: [],
     datasets: [
       {
         label: 'Year Sales',
@@ -51,19 +51,36 @@ export default function Barchart() {
         const response = await fetch('/api/chartData?chartType=totalSalesLastYear');
         const salesData = await response.json();
 
-        // Map the salesData to update the data object
-        const updatedData = data.labels.map(month => {
-          const matchingData = salesData.find(item => item.monthName === month);
+        // Extract sales data for each month
+        const sales = Array.from({ length: 12 }, (_, index) => {
+          const matchingData = salesData.find(item => item._id.month === index + 1);
           return matchingData ? matchingData.totalAmount : 0;
         });
 
-        // Update the data state
+        // Create an array of month names for all months
+        const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        const currentIndex = new Date().getMonth();
+
+        // Reorder the sales data and labels array
+        const newSales = [
+          ...sales.slice(currentIndex+1),
+          ...sales.slice(0, currentIndex+1)
+        ];
+
+        const newLabels = [
+          ...labels.slice(currentIndex+1),
+          ...labels.slice(0, currentIndex+1)
+        ];
+
+        // Update the data state with the updated sales data and labels
         setData(prevData => ({
           ...prevData,
+          labels: newLabels,
           datasets: [
             {
               ...prevData.datasets[0],
-              data: updatedData
+              data: newSales
             }
           ]
         }));
@@ -76,14 +93,15 @@ export default function Barchart() {
   }, []);
 
   return (
-    <div className='w-auto md:col-span-2 relative lg:h-[70vh] h-[50vh]  p-4 border rounded-lg bg-white ml-2 mt-2 mr-2 '>
+    <div className='w-auto md:col-span-2 relative lg:h-[70vh] h-[50vh] p-4 border rounded-lg bg-white ml-2 mt-2 mr-2 '>
       <Bar
-          data={data}
-          options={{
-            maintainAspectRatio: false
-          }}
-        />
+        data={data}
+        options={{
+          maintainAspectRatio: false
+        }}
+      />
     </div>
   );
 }
+
 

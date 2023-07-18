@@ -16,6 +16,7 @@ export default function OrdersPage() {
         <thead>
           <tr>
             <th>Date</th>
+            <th>Price</th>
             <th>Paid</th>
             <th>Recipient</th>
             <th>Products</th>
@@ -26,6 +27,8 @@ export default function OrdersPage() {
           <tr key={order._id}>
             <td>{(new Date(order.createdAt)).toLocaleString()}
             </td>
+            <td>{ order.totalPrice }$
+            </td>
             <td className={order.paid ? 'text-green-600' : 'text-red-600'}>
               {order.paid ? 'YES' : 'NO'}
             </td>
@@ -35,7 +38,7 @@ export default function OrdersPage() {
               {order.streetAddress}
             </td>
             <td>
-              {order.line_items.map(l => (
+              {order.line_items && Array.isArray(order.line_items) && order.line_items.map(l => (
                 <>
                   {l.price_data?.product_data.name} x
                   {l.quantity}<br />

@@ -102,19 +102,21 @@ console.log('-->data :'+chartData);
             <tr>
                 <th scope="col" class="px-6 py-3">
                 day
-                </th>
+                </th>        
+                <th scope="col" class="px-6 py-3">
+                date
+                </th>               
                 <th scope="col" class="px-6 py-3">
                 total
                 </th>
-              
                 </tr>
                 </thead>
                 <tbody>
                   {chartData2.map((item) => (
                           <tr key={item._id}  class="bg-white border-b  ">
-                            <td class="px-6 py-4"> {item.dayName.name} </td>
-                            <td class="px-6 py-4">   {item.totalAmount}$</td>
-                            
+                            <td class="px-6 py-4"> {item.dayName} </td> 
+                            <td class="px-6 py-4">   {item._id}</td>
+                             <td class="px-6 py-4">   {item.totalAmount}$</td>
                           </tr>
                         ))}
                       

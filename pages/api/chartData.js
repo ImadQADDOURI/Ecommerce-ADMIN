@@ -14,96 +14,87 @@ export default async function handler(req,res) {
         count: { $sum: 1 },
       },
     },
+    {
+      $sort: {
+        _id: 1 // Sort by country name in ascending order
+      }
+    }
   ]);
 
   res.status(200).json(data);
 
  }
 
+
+
  else if (req.query.chartType === 'totalSalesLastWeek') {
+  // Get the start and end dates for the last week
+  const today = new Date();
+  const lastWeekStartDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() - 6
+  );
+  const lastWeekEndDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + 1
+  );
 
-      // Get the start and end dates for the last week
-      const today = new Date();
-      const lastWeekStartDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() - 7
-      );
+  // Calculate the total sales for each day of the last week
+  const totalSales = await Order.aggregate([
+    {
+      $match: {
+        createdAt: { $gte: lastWeekStartDate, $lte: lastWeekEndDate },
+        paid: true,
+      },
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: {
+            format: '%Y-%m-%d',
+            date: '$createdAt',
+          },
+        },
+        totalAmount: {
+          $sum: '$totalPrice',
+        },
+      },
+    },
+    {
+      $sort: {
+        _id: 1,
+      },
+    },
+  ]);
 
-      const lastWeekEndDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() - 1
-      );
+  // Calculate the day name for each entry
+  const daysOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+
+  const totalSalesWithDayName = totalSales.map((sales) => {
+    const date = new Date(sales._id);
+    const dayName = daysOfWeek[date.getDay()];
+    return { ...sales, dayName };
+  });
+   //console.log(totalSalesWithDayName);
+  res.status(200).json(totalSalesWithDayName);
+}
+
+
+
+
+
     
-      // Calculate the total sales for each day of the last week
-      const totalSales = await Order.aggregate([
-        {
-          $match: {
-            createdAt: { $gte: lastWeekStartDate , $lte : lastWeekEndDate },
-            paid: true,
-          },
-        },
-        {
-          $unwind: '$line_items',
-        },
-        
-        {
-          $group: {
-            _id: {
-              $dateToString: {
-                format: '%Y-%m-%d', // Format the date as YYYY-MM-DD
-                date: '$createdAt',
-              },
-            },
-            totalAmount: {
-              $sum: '$line_items.price_data.unit_amount',
-            },
-          },
-        },
-        {
-          $sort: {
-            _id: -1, // Sort in ascending order of _id (date)
-          },
-        },
-        {
-          $project: {
-            _id: 0,
-            date: '$_id',
-            dayName: {
-              $let: {
-                vars: {
-                  daysOfWeek: [
-                    { num: 1, name: 'Sunday' },
-                    { num: 2, name: 'Monday' },
-                    { num: 3, name: 'Tuesday' },
-                    { num: 4, name: 'Wednesday' },
-                    { num: 5, name: 'Thursday' },
-                    { num: 6, name: 'Friday' },
-                    { num: 7, name: 'Saturday' },
-                  ],
-                },
-                in: {
-                  $arrayElemAt: [
-                    '$$daysOfWeek',
-                    { $subtract: [{ $dayOfWeek: { $dateFromString: { dateString: '$_id' } } }, 1] },
-                  ],
-                },
-              },
-            },
-            totalAmount: 1,
-          },
-        },
-        
-
-      ]);
-
-      res.status(200).json(totalSales);
-
-    }
-
  else if (req.query.chartType === 'totalSalesLastYear') {
-
   const result = await Order.aggregate([
     {
       $match: {
@@ -115,15 +106,12 @@ export default async function handler(req,res) {
       },
     },
     {
-      $unwind: '$line_items',
-    },
-    {
       $group: {
         _id: {
           month: { $month: '$createdAt' },
         },
         totalAmount: {
-          $sum: '$line_items.price_data.unit_amount',
+          $sum: '$totalPrice',
         },
       },
     },
@@ -162,9 +150,16 @@ export default async function handler(req,res) {
     },
   ]);
 
+  // Sort the result in descending order of months
+  result.sort((a, b) => b._id.month - a._id.month);
+  
+  //console.log(result);
   res.status(200).json(result);
+}
 
-    }
+
+
+
 
     else if (req.query.chartType === 'PaidUnpaidOrders'){
 

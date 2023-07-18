@@ -1,12 +1,11 @@
-import React,{ useEffect, useState }  from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
 
 export default function Linechart() {
   const [data, setData] = useState({
-    labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    labels: [],
     datasets: [
       {
         label: 'Last Week Sales',
@@ -27,9 +26,9 @@ export default function Linechart() {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: []
-      }
-    ]
+        data: [],
+      },
+    ],
   });
 
   useEffect(() => {
@@ -39,21 +38,35 @@ export default function Linechart() {
         const response = await fetch('/api/chartData?chartType=totalSalesLastWeek');
         const salesData = await response.json();
 
-        // Map the salesData to update the data object
-        const updatedData = data.labels.map(day => {
-          const matchingData = salesData.find(item => item.dayName.name === day);
+        // Get the day names for the last week in reverse order
+        const today = new Date();
+        const lastWeekDates = [];
+        for (let i = 6; i >= 0; i--) {
+          const date = new Date(today);
+          date.setDate(today.getDate() - i);
+          lastWeekDates.push(date);
+        }
+        const dayNames = lastWeekDates.map((date) => {
+          const options = { weekday: 'long' };
+          return new Intl.DateTimeFormat('en-US', options).format(date);
+        });
+
+        // Map the sales data to match the day names and get the total sales for each day
+        const updatedData = dayNames.map((dayName) => {
+          const matchingData = salesData.find((item) => item.dayName === dayName);
           return matchingData ? matchingData.totalAmount : 0;
         });
 
         // Update the data state
-        setData(prevData => ({
+        setData((prevData) => ({
           ...prevData,
+          labels: dayNames,
           datasets: [
             {
               ...prevData.datasets[0],
-              data: updatedData
-            }
-          ]
+              data: updatedData,
+            },
+          ],
         }));
       } catch (error) {
         console.log('Error fetching sales data:', error);
