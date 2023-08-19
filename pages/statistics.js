@@ -90,12 +90,12 @@ console.log('-->data :'+chartData);
   
 
   return (
-    <Layout >
-      <div className="justify-between">
+ <Layout >
+  <div className='hidden md:block w-auto'> 
 
 
- <h1>Total Sales Last Week</h1>
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-2">
+        <h1>Total Sales Last Week</h1>
+          <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-2">
  
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-600">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-500">
@@ -122,7 +122,7 @@ console.log('-->data :'+chartData);
                       
                 </tbody>
                 </table>
-</div>
+        </div>
     
       
 
@@ -207,7 +207,7 @@ console.log('-->data :'+chartData);
        </tbody>
       </table>
     </div>
-    </div>
+  </div>
 
 
 

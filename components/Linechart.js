@@ -77,7 +77,7 @@ export default function Linechart() {
   }, []);
 
   return (
-    <div className='w-auto md:col-span-2 relative lg:h-[70vh] h-[50vh]  p-4 border rounded-lg bg-white ml-2 mt-2 mr-2 '>
+    <div className='w-auto md:col-span-2 relative lg:h-[60vh] h-[50vh]  p-4 border rounded-lg bg-white ml-2 mt-2 mr-2 '>
       <Line data={data} />
     </div>
   );
